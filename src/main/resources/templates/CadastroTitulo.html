@@ -1,0 +1,60 @@
+<!DOCKTYPE html>
+<html xmlns="https://www.w3.prg/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Cadastro de título</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+</head>
+<body>
+<nav style="background: black" class="navbar navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">
+    <img src="https://1.bp.blogspot.com/-ttBUdCzkmv4/XcHbGA-WPGI/AAAAAAABa3E/bQP8FuQ62KMK2nstsLrsyzIrSmPBeoR6gCLcBGAsYHQ/s1600/4410.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+    Melhor site com spring
+  </a>
+</nav>
+<div style="width: 98%;border: solid 2px black; margin-top: 10px;" class="container-fluid">
+<h1>Novo titulo</h1>
+<form class="form-horizontal" method="POST" action="/titulos">
+	<div  style="background: #84de84;border: solid 1px black" class="alert alert-sucess" th:if="${!#strings.isEmpty(mensagem)}">
+		<span th:text="${mensagem}"></span>
+	</div> 
+  <div class="form-group row">
+    <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Descrição: </label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control form-control-lg" id="descricao" name="descricao">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Data de Vencimento</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control form-control-lg" id="dataVencimento" name="dataVencimento">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Valor:</label>
+    <div class="col-sm-8">
+      <input class="form-control form-control-lg" id="valor" name="valor">
+    </div>
+  </div>
+    <div class="form-group row">
+    <label for="status" class="col-sm-2 col-form-label col-form-label-lg">Status:</label>
+    <div class="col-sm-8">
+     	<select class="form-control form-control-lg" name="status">
+     	<option th:each="status : ${todosStatusTitulo}" th:value="${status}" th:text="${status.descricao}"></option>
+     	</select>
+    </div>
+  </div>
+  <div class="form-group">
+  	<div class="col-sm-offset-2 col-sm-10">
+  		<button type="submit" class="btn btn-primary">Salvar</button>
+  	</div>
+  </div>
+</form>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
