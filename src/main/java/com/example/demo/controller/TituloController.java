@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,15 +30,22 @@ public class TituloController {
 	}
 	//Salvar no banco de dados
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView salvar(Titulo titulo) {
-		
-		titulos.save(titulo);
+	public ModelAndView salvar(@Validated Titulo titulo, Errors errors) {
 		ModelAndView mv = new ModelAndView("CadastroTitulo");
+		if(errors.hasErrors()) {
+			return mv;
+		}
+		titulos.save(titulo);
 		mv.addObject("mensagem", "Salvo com sucesso");
-		mv.addObject("todosStatusTitulo", StatusTitulo.values());
 		return mv;
 	}
-	
+	@RequestMapping
+	public ModelAndView pesquisar() {
+		List<Titulo> todosTitulos = titulos.findAll();
+		ModelAndView mv = new ModelAndView("PesquisaTitulo");
+		mv.addObject("titulos", todosTitulos);
+		return mv;
+	}
 	@ModelAttribute("todosStatusTitulo")
 	public List<StatusTitulo> todosStatusTitulo(){
 		return Arrays.asList(StatusTitulo.values());
