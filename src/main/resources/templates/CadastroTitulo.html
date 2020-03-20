@@ -10,26 +10,27 @@
 <div style="width: 98%;border: solid 2px black; margin-top: 10px;" class="container-fluid">
 <h1>Novo titulo</h1>
 <a class="btn btn-link" href="/titulos">Voltar para pesquisa</a>
-<form class="form-horizontal" method="POST" action="/titulos">
-	<div  style="background: #84de84;border: solid 1px black" class="alert alert-sucess" th:if="${!#strings.isEmpty(mensagem)}">
-		<span th:text="${mensagem}"></span>
-	</div> 
-  <div class="form-group row">
+<form class="form-horizontal" method="POST" action="/titulos" th:object="${titulo}">
+	<div layout:insert="Mensagem">
+	</div>
+
+  <div class="form-group row" th:classappend="${#fields.hasErrors('descricao')} ? is-invalid">
     <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Descrição: </label>
     <div class="col-sm-8">
-      <input type="text" class="form-control form-control-lg" id="descricao" name="descricao">
+      <input type="text" class="form-control form-control-lg" id="descricao" th:field="*{descricao}"/>
     </div>
   </div>
-  <div class="form-group row">
+  <input type="hidden" th:field="*{codigo}"/>
+  <div class="form-group row" th:classappend="${#fields.hasErrors('dataVencimento')} ? is-invalid">
     <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Data de Vencimento</label>
     <div class="col-sm-8">
-      <input type="text" class="form-control form-control-lg" id="dataVencimento" name="dataVencimento">
+      <input type="text" class="form-control form-control-lg" id="dataVencimento" th:field="*{dataVencimento}">
     </div>
   </div>
-  <div class="form-group row">
+  <div class="form-group row" th:classappend="${#fields.hasErrors('valor')} ? is-invalid">
     <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Valor:</label>
     <div class="col-sm-8">
-      <input class="form-control form-control-lg" id="valor" name="valor">
+      <input class="form-control form-control-lg" id="valor" th:field="*{valor}">
     </div>
   </div>
     <div class="form-group row">

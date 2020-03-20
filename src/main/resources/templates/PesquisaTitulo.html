@@ -14,24 +14,32 @@
     <thead>
         <tr>
             <th>#</th>
-            <th class="text-center col-md-1">Descrição</th>
-            <th class="text-center col-md-2">Data de vencimento</th>
-            <th class="text-right col-md-2">Valor</th>
-            <th class="text-center col-md-2">Status</th>
-        	<th class="col-md-2"></th>
+            <th>Descrição</th>
+            <th>Data de vencimento</th>
+            <th>Valor</th>
+            <th>Status</th>
+        	<th>Ações</th>
         </tr>
     </thead>
     <tbody>
     <tr th:each="titulo : ${titulos}">
     	<td th:text="${titulo.codigo}">1</td>
-    	<td class="text-center" th:text="${titulo.descricao}"></td>
-    	<td class="text-center" th:text="${{titulo.dataVencimento}}"></td>
-    	<td class="text-right" th:text="${{titulo.valor}}"></td>
-    	<td class="text-center" th:text="${titulo.status.descricao}">
+    	<td  th:text="${titulo.descricao}"></td>
+    	<td  th:text="${{titulo.dataVencimento}}"></td>
+    	<td  th:text="${{titulo.valor}}"></td>
+    	<td  th:text="${titulo.status.descricao}">
     	<span class="badge" th:text="${titulo.status.descricao}" th:classappend="${titulo.pendente ? 'badge-danger' : 'badge-success'}">Sucess</span>
     	</td>
-    	<td class="text-center">
-    		
+    	<td>
+    		<a class="btn btn-link btn-xs" th:href="@{/titulos/{codigo}(codigo=${titulo.codigo})}">
+    			<span type="button" class="btn btn-primary">Editar</span>
+
+    		</a>
+					<a class="btn btn-link btn-xs"
+								th:href="@{/titulos/excluir/{codigo}(codigo=${titulo.codigo})}"
+								data-toggle="tooltip" data-placement="top" title="Excluir">
+									<span type="button" style="color: red"class="btn btn-dark">Excluir</span>
+							</a>
     	</td>
     </tr>
             <tr>

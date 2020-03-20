@@ -8,9 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.model.StatusTitulo;
 import com.example.demo.model.Titulo;
@@ -19,25 +21,27 @@ import com.example.demo.repository.Titulos;
 @Controller
 @RequestMapping("/titulos")
 public class TituloController {
+	private static final String CADASTRO_VIEW = "CadastroTitulo";
+	
 	@Autowired
 	private Titulos titulos;
 	
 	@RequestMapping("/novo")
 	public ModelAndView novo() {
-		ModelAndView mv = new ModelAndView("CadastroTitulo");
-		mv.addObject("todosStatusTitulo", StatusTitulo.values());
+		ModelAndView mv = new ModelAndView(CADASTRO_VIEW);
+		mv.addObject(new Titulo());
 		return mv;
 	}
 	//Salvar no banco de dados
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView salvar(@Validated Titulo titulo, Errors errors) {
-		ModelAndView mv = new ModelAndView("CadastroTitulo");
+	public String salvar(@Validated Titulo titulo, Errors errors, RedirectAttributes attributes) {
 		if(errors.hasErrors()) {
-			return mv;
+			return "CADASTRO_VIEW";
 		}
 		titulos.save(titulo);
-		mv.addObject("mensagem", "Salvo com sucesso");
-		return mv;
+		attributes.addFlashAttribute("mensagem", "Salvo com sucesso");
+		return "redirect:/titulos/novo";
+		
 	}
 	@RequestMapping
 	public ModelAndView pesquisar() {
@@ -46,8 +50,22 @@ public class TituloController {
 		mv.addObject("titulos", todosTitulos);
 		return mv;
 	}
+	@RequestMapping(path = "/excluir/{codigo}")
+    public String excluir(@PathVariable("codigo") Titulo titulo) {
+        this.titulos.delete(titulo);
+        return "redirect:/titulos";
+    }
+	
+	@RequestMapping("{codigo}")
+	public ModelAndView edicao(@PathVariable Long codigo) {
+		Titulo titulo = titulos.findById(codigo).get();
+		ModelAndView mv = new ModelAndView(CADASTRO_VIEW);
+		mv.addObject(titulo);
+		return mv;
+	}
 	@ModelAttribute("todosStatusTitulo")
 	public List<StatusTitulo> todosStatusTitulo(){
 		return Arrays.asList(StatusTitulo.values());
 	}
+	
 }
