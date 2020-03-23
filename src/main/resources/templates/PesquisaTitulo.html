@@ -27,19 +27,22 @@
     	<td  th:text="${titulo.descricao}"></td>
     	<td  th:text="${{titulo.dataVencimento}}"></td>
     	<td  th:text="${{titulo.valor}}"></td>
-    	<td  th:text="${titulo.status.descricao}">
+    	<td  th:text="${titulo.status.descricao}" th:attr="data-role=${titulo.codigo}">
     	<span class="badge" th:text="${titulo.status.descricao}" th:classappend="${titulo.pendente ? 'badge-danger' : 'badge-success'}">Sucess</span>
     	</td>
     	<td>
     		<a class="btn btn-link btn-xs" th:href="@{/titulos/{codigo}(codigo=${titulo.codigo})}">
     			<span type="button" class="btn btn-primary">Editar</span>
-
     		</a>
-					<a class="btn btn-link btn-xs"
-								th:href="@{/titulos/excluir/{codigo}(codigo=${titulo.codigo})}"
-								data-toggle="tooltip" data-placement="top" title="Excluir">
-									<span type="button" style="color: red"class="btn btn-dark">Excluir</span>
-							</a>
+			<a class="btn btn-link btn-xs" th:href="@{/titulos/excluir/{codigo}(codigo=${titulo.codigo})}"
+			data-toggle="tooltip" data-placement="top" title="Excluir">
+			<span type="button" style="color: red"class="btn btn-dark">Excluir</span>
+			</a>
+			<a class="btn btn-link btn-xs js-atualizar-status" th:if="${titulo.pendente}"
+				th:attr="data-codigo=${titulo.codigo}"
+				th:href="@{/titulos/{codigo}/receber(codigo=${titulo.codigo})}">
+    			<span type="button" class="btn btn-primary">Receber</span>
+    		</a>
     	</td>
     </tr>
             <tr>
