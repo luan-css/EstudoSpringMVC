@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo.model.StatusTitulo;
 import com.example.demo.model.Titulo;
 import com.example.demo.repository.Titulos;
+import com.example.demo.repository.filter.TituloFilter;
 import com.example.demo.services.CadastroTituloService;
 
 @Controller
@@ -53,8 +55,8 @@ public class TituloController {
 		}
 	}
 	@RequestMapping
-	public ModelAndView pesquisar() {
-		List<Titulo> todosTitulos = titulos.findAll();
+	public ModelAndView pesquisar(@ModelAttribute("filtro") TituloFilter filtro) {
+		List<Titulo> todosTitulos = cadastroTituloService.filtrar(filtro);
 		ModelAndView mv = new ModelAndView("PesquisaTitulo");
 		mv.addObject("titulos", todosTitulos);
 		return mv;

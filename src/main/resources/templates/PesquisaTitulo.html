@@ -10,6 +10,19 @@
 <div class="container-fluid" style="margin-top:10px;">
 <h1>Pesquisa titulo</h1>
 <a class="btn btn-link" href="/titulos/novo">Criar novo titulo</a>
+<form method="GET" class="form-horizontal" action="/titulos" th:object="${filtro}">
+	<div class="form-group">
+		<div class="col-lg-4">
+			<div class="input-group">
+			<input class="form-control" placeholder="Qual titulo você está procurando?"
+			autofocus="autofocus" nome="descricao" th:field="*{descricao}">
+			<span class="input-group-btn"></span>
+			<button type="submit" class="btn btn-default">Pesquisar</button>
+			</div>
+		</div>		
+	</div>
+</form>
+<div class="table-responsive">
 <table id="casa" class="table table-striped table-dark">
     <thead>
         <tr>
@@ -50,6 +63,7 @@
             </tr>
     </tbody>
 </table>
+</div>
 </div>
 </section>
 </html>
